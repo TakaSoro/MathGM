@@ -2,743 +2,683 @@
 <div class="toast toast--{{ toast_type }}">{{ toast }}</div>
 {% endif %}
 
-<!-- TAB Content: Home -->
+<!-- TAB: Home -->
 <div class="tab-content active" id="tab-home">
-  <!-- Player Card -->
-  <section class="section">
-    <h2 class="section-title">Player Profile</h2>
-    {% include "partials/player_card.html" %}
-  </section>
-
-  <!-- Rivalry Head-to-Head -->
-  <section class="section">
-    <h2 class="section-title">Rivalry Comparison</h2>
-    <div class="comparison-card">
-      <div class="comparison-header">
-        <div>
-          <div class="comparison-header__player comparison-header__player--user">{{ player.name }}</div>
-          <div style="font-size: 0.65rem; color: var(--text-muted);">{{ player.team }}</div>
-        </div>
-        <div class="comparison-header__vs">VS</div>
-        <div>
-          <div class="comparison-header__player comparison-header__player--rival">{% if rival_player %}{{ rival_player.name }}{% else %}Hypatia{% endif %}</div>
-          <div style="font-size: 0.65rem; color: var(--text-muted);">{% if rival_player %}{{ rival_player.team }}{% else %}Alexandria Alphas{% endif %}</div>
-        </div>
+  <div class="dashboard-grid">
+    <!-- Player Profile -->
+    <div class="panel col-span-4" id="section-profile">
+      <div class="panel__header">
+        <h2 class="panel__title">Player Profile</h2>
+        <span class="badge badge--accent">{{ player.position }}</span>
       </div>
+      <div class="panel__body">
+        {% include "partials/player_card.html" %}
+      </div>
+    </div>
 
-      <div class="comparison-grid">
-        <!-- OVR -->
-        <div class="comparison-row">
-          <div class="comparison-row__value {% if overall > (rival_summary.ovr if rival_summary else 0) %}comparison-row__value--better{% endif %}">{{ overall }}</div>
-          <div class="comparison-row__label">OVR</div>
-          <div class="comparison-row__value {% if (rival_summary.ovr if rival_summary else 0) > overall %}comparison-row__value--better{% endif %}">{{ rival_summary.ovr if rival_summary else '78' }}</div>
+    <!-- Season Summary -->
+    <div class="panel col-span-4" id="section-season">
+      <div class="panel__header">
+        <h2 class="panel__title">Season Summary</h2>
+      </div>
+      <div class="panel__body">
+        <div class="metrics-row">
+          <div class="metric">
+            <div class="metric__label">Record</div>
+            <div class="metric__value">{{ season.player_record.wins }}-{{ season.player_record.losses }}</div>
+          </div>
+          <div class="metric">
+            <div class="metric__label">Games</div>
+            <div class="metric__value">{{ season.games_played }}/{{ config.season_length }}</div>
+          </div>
+          <div class="metric">
+            <div class="metric__label">OVR</div>
+            <div class="metric__value metric__value--accent">{{ overall }}</div>
+          </div>
         </div>
-        <!-- Record -->
-        <div class="comparison-row">
-          <div class="comparison-row__value">{{ season.player_record.wins }}-{{ season.player_record.losses }}</div>
-          <div class="comparison-row__label">Record</div>
-          <div class="comparison-row__value">{% if rival_summary %}{{ rival_summary.wins }}-{{ rival_summary.losses }}{% else %}0-0{% endif %}</div>
-        </div>
-        <!-- MVP Score -->
-        <div class="comparison-row">
-          <div class="comparison-row__value {% if last_game and last_game.mvp_score > (rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else 0.0) %}comparison-row__value--better{% endif %}">{{ last_game.mvp_score if last_game else '0.0' }}</div>
-          <div class="comparison-row__label">Last MVP</div>
-          <div class="comparison-row__value {% if rival_player and rival_player.last_game_mvp is not none and rival_player.last_game_mvp > (last_game.mvp_score if last_game else 0.0) %}comparison-row__value--better{% endif %}">{{ rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else '0.0' }}</div>
-        </div>
-        <!-- Avg MVP -->
-        {% set user_avg_mvp = mvp_race | selectattr("is_user") | map(attribute="avg_mvp") | first | default(0.0) %}
-        {% set rival_avg_mvp = rival_summary.avg_mvp if rival_summary is not none else 0.0 %}
-        <div class="comparison-row">
-          <div class="comparison-row__value {% if user_avg_mvp > rival_avg_mvp %}comparison-row__value--better{% endif %}">{{ user_avg_mvp }}</div>
-          <div class="comparison-row__label">Season Avg MVP</div>
-          <div class="comparison-row__value {% if rival_avg_mvp > user_avg_mvp %}comparison-row__value--better{% endif %}">{{ rival_avg_mvp }}</div>
-        </div>
-        <!-- PPG -->
-        {% set user_avg_pts = mvp_race | selectattr("is_user") | map(attribute="avg_pts") | first | default(0.0) %}
-        {% set rival_avg_pts = rival_summary.avg_pts if rival_summary is not none else 0.0 %}
-        <div class="comparison-row">
-          <div class="comparison-row__value {% if user_avg_pts > rival_avg_pts %}comparison-row__value--better{% endif %}">{{ user_avg_pts }}</div>
-          <div class="comparison-row__label">PTS / Game</div>
-          <div class="comparison-row__value {% if rival_avg_pts > user_avg_pts %}comparison-row__value--better{% endif %}">{{ rival_avg_pts }}</div>
-        </div>
-        <!-- APG -->
-        {% set user_avg_ast = mvp_race | selectattr("is_user") | map(attribute="avg_ast") | first | default(0.0) %}
-        {% set rival_avg_ast = rival_summary.avg_ast if rival_summary is not none else 0.0 %}
-        <div class="comparison-row">
-          <div class="comparison-row__value {% if user_avg_ast > rival_avg_ast %}comparison-row__value--better{% endif %}">{{ user_avg_ast }}</div>
-          <div class="comparison-row__label">AST / Game</div>
-          <div class="comparison-row__value {% if rival_avg_ast > user_avg_ast %}comparison-row__value--better{% endif %}">{{ rival_avg_ast }}</div>
-        </div>
-        <!-- RPG -->
-        {% set user_avg_reb = mvp_race | selectattr("is_user") | map(attribute="avg_reb") | first | default(0.0) %}
-        {% set rival_avg_reb = rival_summary.avg_reb if rival_summary is not none else 0.0 %}
-        <div class="comparison-row">
-          <div class="comparison-row__value {% if user_avg_reb > rival_avg_reb %}comparison-row__value--better{% endif %}">{{ user_avg_reb }}</div>
-          <div class="comparison-row__label">REB / Game</div>
-          <div class="comparison-row__value {% if rival_avg_reb > user_avg_reb %}comparison-row__value--better{% endif %}">{{ rival_avg_reb }}</div>
+        <div style="margin-top: 0.5rem;">
+          {% include "partials/box_score.html" %}
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Season Stats -->
-  <section class="section">
-    <h2 class="section-title">Season Stats</h2>
-    <div class="season-bar">
-      <div class="season-stat">
-        <div class="season-stat__label">Record</div>
-        <div class="season-stat__value">{{ season.player_record.wins }}-{{ season.player_record.losses }}</div>
+    <!-- Submit Day -->
+    <div class="panel col-span-4" id="section-submit">
+      <div class="panel__header">
+        <h2 class="panel__title">Submit Day</h2>
       </div>
-      <div class="season-stat">
-        <div class="season-stat__label">Games Played</div>
-        <div class="season-stat__value">{{ season.games_played }}/{{ config.season_length }}</div>
+      <div class="panel__body panel__body--scroll">
+        {% include "partials/submit_form.html" %}
       </div>
     </div>
-    {% include "partials/box_score.html" %}
-  </section>
 
-  <!-- Submit Day -->
-  <section class="section">
-    <h2 class="section-title">Submit Day</h2>
-    {% include "partials/submit_form.html" %}
-  </section>
+    <!-- Rivalry Comparison -->
+    <div class="panel col-span-8" id="section-rivalry">
+      <div class="panel__header">
+        <h2 class="panel__title">Rivalry Comparison</h2>
+      </div>
+      <div class="panel__body">
+        <div class="comparison-card">
+          <div class="comparison-header">
+            <div>
+              <div class="comparison-header__player comparison-header__player--user">{{ player.name }}</div>
+              <div class="text-muted" style="font-size: 0.65rem;">{{ player.team }}</div>
+            </div>
+            <div class="comparison-header__vs">VS</div>
+            <div>
+              <div class="comparison-header__player comparison-header__player--rival">{% if rival_player %}{{ rival_player.name }}{% else %}Hypatia{% endif %}</div>
+              <div class="text-muted" style="font-size: 0.65rem;">{% if rival_player %}{{ rival_player.team }}{% else %}Alexandria Alphas{% endif %}</div>
+            </div>
+          </div>
+
+          <div class="comparison-grid">
+            <div class="comparison-row">
+              <div class="comparison-row__value {% if overall > (rival_summary.ovr if rival_summary else 0) %}comparison-row__value--better{% endif %}">{{ overall }}</div>
+              <div class="comparison-row__label">OVR</div>
+              <div class="comparison-row__value {% if (rival_summary.ovr if rival_summary else 0) > overall %}comparison-row__value--better{% endif %}">{{ rival_summary.ovr if rival_summary else '78' }}</div>
+            </div>
+            <div class="comparison-row">
+              <div class="comparison-row__value">{{ season.player_record.wins }}-{{ season.player_record.losses }}</div>
+              <div class="comparison-row__label">Record</div>
+              <div class="comparison-row__value">{% if rival_summary %}{{ rival_summary.wins }}-{{ rival_summary.losses }}{% else %}0-0{% endif %}</div>
+            </div>
+            <div class="comparison-row">
+              <div class="comparison-row__value {% if last_game and last_game.mvp_score > (rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else 0.0) %}comparison-row__value--better{% endif %}">{{ last_game.mvp_score if last_game else '0.0' }}</div>
+              <div class="comparison-row__label">Last MVP</div>
+              <div class="comparison-row__value {% if rival_player and rival_player.last_game_mvp is not none and rival_player.last_game_mvp > (last_game.mvp_score if last_game else 0.0) %}comparison-row__value--better{% endif %}">{{ rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else '0.0' }}</div>
+            </div>
+            {% set user_avg_mvp = mvp_race | selectattr("is_user") | map(attribute="avg_mvp") | first | default(0.0) %}
+            {% set rival_avg_mvp = rival_summary.avg_mvp if rival_summary is not none else 0.0 %}
+            <div class="comparison-row">
+              <div class="comparison-row__value {% if user_avg_mvp > rival_avg_mvp %}comparison-row__value--better{% endif %}">{{ user_avg_mvp }}</div>
+              <div class="comparison-row__label">Season Avg MVP</div>
+              <div class="comparison-row__value {% if rival_avg_mvp > user_avg_mvp %}comparison-row__value--better{% endif %}">{{ rival_avg_mvp }}</div>
+            </div>
+            {% set user_avg_pts = mvp_race | selectattr("is_user") | map(attribute="avg_pts") | first | default(0.0) %}
+            {% set rival_avg_pts = rival_summary.avg_pts if rival_summary is not none else 0.0 %}
+            <div class="comparison-row">
+              <div class="comparison-row__value {% if user_avg_pts > rival_avg_pts %}comparison-row__value--better{% endif %}">{{ user_avg_pts }}</div>
+              <div class="comparison-row__label">PTS / Game</div>
+              <div class="comparison-row__value {% if rival_avg_pts > user_avg_pts %}comparison-row__value--better{% endif %}">{{ rival_avg_pts }}</div>
+            </div>
+            {% set user_avg_ast = mvp_race | selectattr("is_user") | map(attribute="avg_ast") | first | default(0.0) %}
+            {% set rival_avg_ast = rival_summary.avg_ast if rival_summary is not none else 0.0 %}
+            <div class="comparison-row">
+              <div class="comparison-row__value {% if user_avg_ast > rival_avg_ast %}comparison-row__value--better{% endif %}">{{ user_avg_ast }}</div>
+              <div class="comparison-row__label">AST / Game</div>
+              <div class="comparison-row__value {% if rival_avg_ast > user_avg_ast %}comparison-row__value--better{% endif %}">{{ rival_avg_ast }}</div>
+            </div>
+            {% set user_avg_reb = mvp_race | selectattr("is_user") | map(attribute="avg_reb") | first | default(0.0) %}
+            {% set rival_avg_reb = rival_summary.avg_reb if rival_summary is not none else 0.0 %}
+            <div class="comparison-row">
+              <div class="comparison-row__value {% if user_avg_reb > rival_avg_reb %}comparison-row__value--better{% endif %}">{{ user_avg_reb }}</div>
+              <div class="comparison-row__label">REB / Game</div>
+              <div class="comparison-row__value {% if rival_avg_reb > user_avg_reb %}comparison-row__value--better{% endif %}">{{ rival_avg_reb }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- TAB Content: Rankings -->
+<!-- TAB: Rankings -->
 <div class="tab-content" id="tab-rankings">
   <div class="rankings-tabs">
     <button class="rankings-tab active" data-rankings="season">Season</button>
     <button class="rankings-tab" data-rankings="career">Career</button>
   </div>
 
-  <!-- Season Rankings -->
   <div class="rankings-content active" id="rankings-season">
-    <section class="section">
-      <h2 class="section-title">MVP Race (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">MVP</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_mvp[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_mvp }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+    <div class="rankings-grid">
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">MVP Race</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">MVP</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_mvp[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_mvp }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">ROY Race (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">MVP</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_rookie[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_mvp }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">ROY Race</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">MVP</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_rookie[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_mvp }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">PTS Leaders (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">PTS</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_pts[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_pts }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">PTS Leaders</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">PTS</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_pts[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_pts }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">AST Leaders (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">AST</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_ast[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_ast }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">AST Leaders</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">AST</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_ast[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_ast }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">REB Leaders (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">REB</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_reb[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_reb }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">REB Leaders</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">REB</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_reb[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_reb }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
-    
-    <section class="section">
-      <h2 class="section-title">STL Leaders (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">STL</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_stl[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_stl }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">BLK Leaders (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">BLK</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_blk[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_blk }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">STL Leaders</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">STL</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_stl[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_stl }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">TO Leaders (Season)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">TO</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in season_rankings_to[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.season_to }}</td>
-              <td class="stat-col">{{ r.season_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">BLK Leaders</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">BLK</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_blk[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_blk }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">TO Leaders</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">TO</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in season_rankings_to[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.season_to }}</td>
+                  <td class="stat-col">{{ r.season_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Career Rankings -->
   <div class="rankings-content" id="rankings-career">
-    <section class="section">
-      <h2 class="section-title">MVP Race (Career)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">MVP</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in career_rankings_mvp[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.career_mvp }}</td>
-              <td class="stat-col">{{ r.career_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+    <div class="rankings-grid">
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">MVP Race (Career)</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">MVP</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in career_rankings_mvp[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.career_mvp }}</td>
+                  <td class="stat-col">{{ r.career_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
-    
-    <section class="section">
-      <h2 class="section-title">PTS Leaders (Career)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">PTS</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in career_rankings_pts[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.career_pts }}</td>
-              <td class="stat-col">{{ r.career_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">AST Leaders (Career)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">AST</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in career_rankings_ast[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.career_ast }}</td>
-              <td class="stat-col">{{ r.career_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">PTS Leaders (Career)</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">PTS</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in career_rankings_pts[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.career_pts }}</td>
+                  <td class="stat-col">{{ r.career_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">REB Leaders (Career)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">REB</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in career_rankings_reb[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.career_reb }}</td>
-              <td class="stat-col">{{ r.career_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">AST Leaders (Career)</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">AST</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in career_rankings_ast[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.career_ast }}</td>
+                  <td class="stat-col">{{ r.career_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">STL Leaders (Career)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">STL</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in career_rankings_stl[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.career_stl }}</td>
-              <td class="stat-col">{{ r.career_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">REB Leaders (Career)</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">REB</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in career_rankings_reb[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.career_reb }}</td>
+                  <td class="stat-col">{{ r.career_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">BLK Leaders (Career)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">BLK</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in career_rankings_blk[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.career_blk }}</td>
-              <td class="stat-col">{{ r.career_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">STL Leaders (Career)</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">STL</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in career_rankings_stl[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.career_stl }}</td>
+                  <td class="stat-col">{{ r.career_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="section">
-      <h2 class="section-title">TO Leaders (Career)</h2>
-      <div class="table-container">
-        <table class="league-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Player</th>
-              <th>Team</th>
-              <th class="stat-col">TO</th>
-              <th class="stat-col">GP</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for r in career_rankings_to[:10] %}
-            <tr class="{% if r.is_user %}user-row{% endif %}">
-              <td>{{ loop.index }}</td>
-              <td>{{ r.name }}{% if r.is_rookie %}<span style="font-size: 0.55rem; color: var(--accent-gold); border: 1px solid var(--accent-gold); padding: 0 0.15rem; border-radius: 2px;">R</span>{% endif %}</td>
-              <td style="font-size: 0.75rem; color: var(--text-muted);">{{ r.team }}</td>
-              <td class="stat-col">{{ r.career_to }}</td>
-              <td class="stat-col">{{ r.career_gp }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">BLK Leaders (Career)</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">BLK</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in career_rankings_blk[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.career_blk }}</td>
+                  <td class="stat-col">{{ r.career_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <div class="panel">
+        <div class="panel__header"><h2 class="panel__title">TO Leaders (Career)</h2></div>
+        <div class="panel__body panel__body--compact">
+          <div class="table-container">
+            <table class="league-table">
+              <thead>
+                <tr><th>Rank</th><th>Player</th><th>Team</th><th class="stat-col">TO</th><th class="stat-col">GP</th></tr>
+              </thead>
+              <tbody>
+                {% for r in career_rankings_to[:10] %}
+                <tr class="{% if r.is_user %}user-row{% endif %}">
+                  <td>{{ loop.index }}</td>
+                  <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
+                  <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
+                  <td class="stat-col">{{ r.career_to }}</td>
+                  <td class="stat-col">{{ r.career_gp }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- TAB Content: Standings -->
+<!-- TAB: Standings -->
 <div class="tab-content" id="tab-standings">
-  <!-- Eastern Standings -->
-  <section class="section">
-    <h2 class="section-title">Eastern Conference</h2>
-    <div class="table-container">
-      <table class="league-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Team</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>Win %</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for t in eastern_standings %}
-          <tr class="{% if t.is_user %}user-row{% endif %}">
-            <td>{{ loop.index }}</td>
-            <td>
-              <div>{{ t.team }}</div>
-              <div style="font-size: 0.6rem; color: var(--text-muted);">{{ t.name }}</div>
-            </td>
-            <td class="stat-col">{{ t.wins }}</td>
-            <td class="stat-col">{{ t.losses }}</td>
-            <td class="stat-col">
-              {% if t.wins + t.losses > 0 %}
-                {{ (t.wins / (t.wins + t.losses)) | round(3) }}
-              {% else %}
-                .000
-              {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div class="standings-grid">
+    <div class="panel" id="section-east">
+      <div class="panel__header"><h2 class="panel__title">Eastern Conference</h2></div>
+      <div class="panel__body panel__body--compact">
+        <div class="table-container">
+          <table class="league-table">
+            <thead>
+              <tr><th>Rank</th><th>Team</th><th class="stat-col">W</th><th class="stat-col">L</th><th class="stat-col">PCT</th></tr>
+            </thead>
+            <tbody>
+              {% for t in eastern_standings %}
+              <tr class="{% if t.is_user %}user-row{% endif %}">
+                <td>{{ loop.index }}</td>
+                <td>
+                  <div>{{ t.team }}</div>
+                  <div class="text-muted" style="font-size: 0.6rem;">{{ t.name }}</div>
+                </td>
+                <td class="stat-col">{{ t.wins }}</td>
+                <td class="stat-col">{{ t.losses }}</td>
+                <td class="stat-col">
+                  {% if t.wins + t.losses > 0 %}{{ (t.wins / (t.wins + t.losses)) | round(3) }}{% else %}.000{% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- Western Standings -->
-  <section class="section">
-    <h2 class="section-title">Western Conference</h2>
-    <div class="table-container">
-      <table class="league-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Team</th>
-            <th>Wins</th>
-            <th>Losses</th>
-            <th>Win %</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for t in western_standings %}
-          <tr class="{% if t.is_user %}user-row{% endif %}">
-            <td>{{ loop.index }}</td>
-            <td>
-              <div>{{ t.team }}</div>
-              <div style="font-size: 0.6rem; color: var(--text-muted);">{{ t.name }}</div>
-            </td>
-            <td class="stat-col">{{ t.wins }}</td>
-            <td class="stat-col">{{ t.losses }}</td>
-            <td class="stat-col">
-              {% if t.wins + t.losses > 0 %}
-                {{ (t.wins / (t.wins + t.losses)) | round(3) }}
-              {% else %}
-                .000
-              {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="panel" id="section-west">
+      <div class="panel__header"><h2 class="panel__title">Western Conference</h2></div>
+      <div class="panel__body panel__body--compact">
+        <div class="table-container">
+          <table class="league-table">
+            <thead>
+              <tr><th>Rank</th><th>Team</th><th class="stat-col">W</th><th class="stat-col">L</th><th class="stat-col">PCT</th></tr>
+            </thead>
+            <tbody>
+              {% for t in western_standings %}
+              <tr class="{% if t.is_user %}user-row{% endif %}">
+                <td>{{ loop.index }}</td>
+                <td>
+                  <div>{{ t.team }}</div>
+                  <div class="text-muted" style="font-size: 0.6rem;">{{ t.name }}</div>
+                </td>
+                <td class="stat-col">{{ t.wins }}</td>
+                <td class="stat-col">{{ t.losses }}</td>
+                <td class="stat-col">
+                  {% if t.wins + t.losses > 0 %}{{ (t.wins / (t.wins + t.losses)) | round(3) }}{% else %}.000{% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
 </div>
 
-<!-- TAB Content: Games -->
+<!-- TAB: Games -->
 <div class="tab-content" id="tab-games">
-  <section class="section">
-    <h2 class="section-title">Game History</h2>
-    <div class="games-list">
-      {% if games %}
-        {% for game in games | reverse %}
-        <div class="game-card" data-game-day="{{ game.day }}" onclick="showGameDetail({{ game.day }})">
-          <div class="game-card__header">
-            <div>
-              <div class="game-card__day">DAY {{ game.day }}</div>
-              <div class="game-card__date">{{ game.date_submitted }}</div>
+  <div class="panel">
+    <div class="panel__header"><h2 class="panel__title">Game History</h2></div>
+    <div class="panel__body panel__body--scroll">
+      <div class="games-list">
+        {% if games %}
+          {% for game in games | reverse %}
+          <div class="game-card" data-game-day="{{ game.day }}" onclick="showGameDetail({{ game.day }})">
+            <div class="game-card__header">
+              <div>
+                <div class="game-card__day">DAY {{ game.day }}</div>
+                <div class="game-card__date">{{ game.date_submitted }}</div>
+              </div>
+              <div class="game-card__result game-card__result--{{ 'win' if game.result == 'W' else 'loss' }}">{{ game.result }}</div>
             </div>
-            <div class="game-card__result game-card__result--{{ 'win' if game.result == 'W' else 'loss' }}">
-              {{ game.result }}
+            <div class="game-card__stats">
+              <span>{{ game.box_score.PTS }} PTS</span>
+              <span>{{ game.box_score.AST }} AST</span>
+              <span>{{ game.box_score.REB }} REB</span>
+              <span>{{ game.box_score.STL }} STL</span>
+              <span>{{ game.box_score.BLK }} BLK</span>
+              <span>{{ game.box_score.TO }} TO</span>
             </div>
+            <div class="game-card__mvp">MVP: {{ game.mvp_score }}</div>
+            {% if game.bonuses %}
+            <div class="game-card__bonuses">
+              {% for bonus in game.bonuses %}
+              <span class="bonus-tag">{{ bonus_labels.get(bonus, bonus) }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
           </div>
-          <div class="game-card__stats">
-            <span>{{ game.box_score.PTS }} PTS</span>
-            <span>{{ game.box_score.AST }} AST</span>
-            <span>{{ game.box_score.REB }} REB</span>
-            <span>{{ game.box_score.STL }} STL</span>
-            <span>{{ game.box_score.BLK }} BLK</span>
-            <span>{{ game.box_score.TO }} TO</span>
-          </div>
-          <div class="game-card__mvp">MVP: {{ game.mvp_score }}</div>
-          {% if game.bonuses %}
-          <div class="game-card__bonuses">
-            {% for bonus in game.bonuses %}
-            <span class="bonus-tag">{{ bonus_labels.get(bonus, bonus) }}</span>
-            {% endfor %}
-          </div>
-          {% endif %}
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">No games played yet. Submit your first day to see games here.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB: News -->
+<div class="tab-content" id="tab-news">
+  <div class="panel">
+    <div class="panel__header"><h2 class="panel__title">League News Feed</h2></div>
+    <div class="panel__body panel__body--scroll">
+      <div class="news-panel">
+        {% for story in news %}
+        {% set item_class = 'news-item--day' %}
+        {% set tag = 'Day Result' %}
+        {% if 'Rivalry' in story %}
+          {% set item_class = 'news-item--rivalry' %}
+          {% set tag = 'Rivalry Matchup' %}
+        {% elif 'Highlight' in story %}
+          {% set item_class = 'news-item--highlight' %}
+          {% set tag = 'League Highlight' %}
+        {% elif 'Streak' in story %}
+          {% set item_class = 'news-item--rivalry' %}
+          {% set tag = 'Hot Streak' %}
+        {% endif %}
+        <div class="news-item {{ item_class }}">
+          <div class="news-item__tag">{{ tag }}</div>
+          <div class="news-item__content">{{ story }}</div>
         </div>
         {% endfor %}
-      {% else %}
-        <div class="empty-state">No games played yet. Submit your first day to see games here.</div>
-      {% endif %}
-    </div>
-  </section>
-</div>
-
-<!-- TAB Content: News -->
-<div class="tab-content" id="tab-news">
-  <section class="section">
-    <h2 class="section-title">League News Feed</h2>
-    <div class="news-panel">
-      {% for story in news %}
-      {% set item_class = 'news-item--day' %}
-      {% set tag = 'Day Result' %}
-      {% if 'Rivalry' in story %}
-        {% set item_class = 'news-item--rivalry' %}
-        {% set tag = 'Rivalry Matchup' %}
-      {% elif 'Highlight' in story %}
-        {% set item_class = 'news-item--highlight' %}
-        {% set tag = 'League Highlight' %}
-      {% elif 'Streak' in story %}
-        {% set item_class = 'news-item--rivalry' %}
-        {% set tag = 'Hot Streak' %}
-      {% endif %}
-      <div class="news-item {{ item_class }}">
-        <div class="news-item__tag">{{ tag }}</div>
-        <div class="news-item__content">{{ story }}</div>
       </div>
-      {% endfor %}
     </div>
-  </section>
+  </div>
 </div>
 
-<!-- TAB Content: Roster -->
+<!-- TAB: Roster -->
 <div class="tab-content" id="tab-roster">
-  <section class="section">
-    <h2 class="section-title">League Rosters</h2>
-    <div class="form-actions">
+  <div class="panel" style="margin-bottom: 0.6rem;">
+    <div class="panel__header">
+      <h2 class="panel__title">League Rosters</h2>
       <button class="btn-secondary" type="button"
               hx-post="/api/regenerate"
               hx-target="#dashboard-main"
               hx-swap="innerHTML"
               hx-confirm="Regenerate the entire roster?"
               {% if season.games_played != 0 %}disabled{% endif %}>
-        Regenerate Roster
+        Regenerate
       </button>
     </div>
-    <div class="roster-container" id="rosters-container">
-      <div class="loading">Loading rosters...</div>
-    </div>
-  </section>
+  </div>
+  <div class="roster-container" id="rosters-container">
+    <div class="loading">Loading rosters...</div>
+  </div>
 </div>
 
-<!-- TAB Content: Seasons -->
+<!-- TAB: Seasons -->
 <div class="tab-content" id="tab-seasons">
-  <section class="section">
-    <h2 class="section-title">Season History</h2>
-    {% if season_history %}
-    <div class="table-container">
-      <table class="league-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Season</th>
-            <th>Year</th>
-            <th>Record</th>
-            <th>Rank</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for s in season_history %}
-          <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ s.label }}</td>
-            <td>{{ s.year }}</td>
-            <td>{{ s.final_record }}</td>
-            <td>{% if s.final_rank %}{{ s.final_rank }}{% else %}—{% endif %}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div class="panel">
+    <div class="panel__header"><h2 class="panel__title">Season History</h2></div>
+    <div class="panel__body panel__body--compact">
+      {% if season_history %}
+      <div class="table-container">
+        <table class="league-table">
+          <thead>
+            <tr><th>#</th><th>Season</th><th>Year</th><th>Record</th><th class="stat-col">Rank</th></tr>
+          </thead>
+          <tbody>
+            {% for s in season_history %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ s.label }}</td>
+              <td>{{ s.year }}</td>
+              <td>{{ s.final_record }}</td>
+              <td class="stat-col">{% if s.final_rank %}{{ s.final_rank }}{% else %}—{% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty-state">No past seasons yet. Complete your first season to see history here.</div>
+      {% endif %}
     </div>
-    {% else %}
-    <div class="empty-state">No past seasons yet. Complete your first season to see history here.</div>
-    {% endif %}
-  </section>
+  </div>
 </div>
-
-

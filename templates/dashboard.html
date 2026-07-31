@@ -4,49 +4,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MathGM 2026 — MBA Rookie Season</title>
-  <link rel="stylesheet" href="/static/css/theme.css?v=3">
+  <link rel="stylesheet" href="/static/css/theme.css?v=4">
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
-  <script src="/static/js/app.js?v=3" defer></script>
+  <script src="/static/js/app.js?v=4" defer></script>
 </head>
 <body>
   <div class="app-shell">
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar">
-      <div class="sidebar__logo">MathGM</div>
-      <div class="sidebar__nav">
-        <button class="sidebar-button active" data-tab="home">Home</button>
-        <button class="sidebar-button" data-tab="games">Games</button>
-        <button class="sidebar-button" data-tab="rankings">Rankings</button>
-        <button class="sidebar-button" data-tab="standings">Standings</button>
-        <button class="sidebar-button" data-tab="news">News</button>
-        <button class="sidebar-button" data-tab="roster">Roster</button>
-        <button class="sidebar-button" data-tab="seasons">Seasons</button>
-      </div>
-    </nav>
-
-    <div class="main-content">
-      <header class="header-bar">
-        <div>
-          <div class="header-bar__league">Mathematical Basketball Association</div>
-          <div class="header-bar__season">{{ season.label }} · {{ season.year }}</div>
+    <!-- Top Navigation -->
+    <header class="topnav">
+      <div class="topnav__left">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="true">
+          <span class="sidebar-toggle__bar"></span>
+          <span class="sidebar-toggle__bar"></span>
+          <span class="sidebar-toggle__bar"></span>
+        </button>
+        <div class="topnav__brand">
+          <span class="topnav__logo">MathGM</span>
+          <span class="topnav__league">MBA</span>
         </div>
-        <div class="header-bar__season">DAY {{ season.current_day if not season.is_complete else season.current_day - 1 }}/{{ config.season_length }}
+        <nav class="topnav__tabs" aria-label="Primary navigation">
+          <button class="topnav-tab active" data-tab="home">Home</button>
+          <button class="topnav-tab" data-tab="games">Games</button>
+          <button class="topnav-tab" data-tab="rankings">Rankings</button>
+          <button class="topnav-tab" data-tab="standings">Standings</button>
+          <button class="topnav-tab" data-tab="news">News</button>
+          <button class="topnav-tab" data-tab="roster">Roster</button>
+          <button class="topnav-tab" data-tab="seasons">Seasons</button>
+        </nav>
+      </div>
+      <div class="topnav__right">
+        <div class="topnav__meta">
+          <span class="topnav__season-label">{{ season.label }} · {{ season.year }}</span>
+          <span class="topnav__day">DAY {{ season.current_day if not season.is_complete else season.current_day - 1 }}/{{ config.season_length }}</span>
           {% if season_history %}
-          <span style="margin-left: 1rem; font-size: 0.7rem; color: var(--text-muted);">(Career: {{ player.career_totals.seasons_played }} seasons)</span>
+          <span class="topnav__career">Career {{ player.career_totals.seasons_played }}S</span>
           {% endif %}
         </div>
-      </header>
-
-      <div id="dashboard-main">
-        {% include "partials/dashboard_main.html" %}
       </div>
-      
-      <!-- Game Detail Modal -->
-      <div id="game-modal" class="modal">
-        <div class="modal-content">
-          <span class="modal-close" onclick="closeModal()">&times;</span>
-          <div id="game-modal-content"></div>
+    </header>
+
+    <div class="app-body">
+      <!-- Collapsible Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__section">
+          <div class="sidebar__heading">Navigation</div>
+          <nav class="sidebar__nav" id="sidebar-nav" aria-label="Secondary navigation">
+            <!-- Populated by JS based on active tab -->
+          </nav>
         </div>
+        <div class="sidebar__section sidebar__section--info">
+          <div class="sidebar__heading">League</div>
+          <div class="sidebar-info">
+            <div class="sidebar-info__row">
+              <span class="sidebar-info__label">Association</span>
+              <span class="sidebar-info__value">MBA</span>
+            </div>
+            <div class="sidebar-info__row">
+              <span class="sidebar-info__label">Player</span>
+              <span class="sidebar-info__value">{{ player.name }}</span>
+            </div>
+            <div class="sidebar-info__row">
+              <span class="sidebar-info__label">Team</span>
+              <span class="sidebar-info__value">{{ player.team }}</span>
+            </div>
+            <div class="sidebar-info__row">
+              <span class="sidebar-info__label">Record</span>
+              <span class="sidebar-info__value">{{ season.player_record.wins }}-{{ season.player_record.losses }}</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="page-header" id="page-header">
+          <h1 class="page-title" id="page-title">Dashboard</h1>
+          <p class="page-subtitle">Mathematical Basketball Association — {{ season.label }}</p>
+        </div>
+
+        <div id="dashboard-main" class="dashboard-main">
+          {% include "partials/dashboard_main.html" %}
+        </div>
+      </main>
+    </div>
+
+    <!-- Game Detail Modal -->
+    <div id="game-modal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div id="game-modal-content"></div>
       </div>
     </div>
   </div>
