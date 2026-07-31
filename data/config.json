@@ -1,0 +1,36 @@
+{
+  "season_year": 2026,
+  "season_length": 2,
+  "pts_per_math_hour": 3,
+  "pts_per_physics_hour": 3,
+  "pts_per_cs_hour": 3,
+  "reb_per_reading_15min": 1,
+  "ast_per_homework": 2,
+  "stl_per_new_thing": 2,
+  "blk_per_misconception_fixed": 2,
+  "to_no_activity": 2,
+  "mvp_ast_mult": 0.7,
+  "mvp_reb_mult": 0.5,
+  "mvp_stl_mult": 1.0,
+  "mvp_blk_mult": 0.7,
+  "mvp_to_penalty": 1.0,
+  "triple_double_threshold": 10,
+  "triple_double_bonus": 10,
+  "clutch_bonus": 8,
+  "homework_marathon_bonus": 12,
+  "all_rounder_bonus": 10,
+  "streak_milestones": [
+    7,
+    14,
+    30
+  ],
+  "streak_multipliers": {
+    "7": 1.05,
+    "14": 1.08,
+    "30": 1.12
+  },
+  "daily_benchmark_base": 35,
+  "daily_benchmark_per_day": 0.2,
+  "overall_mvp_weight": 0.15,
+  "overall_growth_weight": 3.0
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathGM 2026 — MBA Rookie Season</title>
+  <link rel="stylesheet" href="/static/css/theme.css?v=3">
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <script src="/static/js/app.js?v=3" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar__logo">MathGM</div>
+      <div class="sidebar__nav">
+        <button class="sidebar-button active" data-tab="home">Home</button>
+        <button class="sidebar-button" data-tab="games">Games</button>
+        <button class="sidebar-button" data-tab="rankings">Rankings</button>
+        <button class="sidebar-button" data-tab="standings">Standings</button>
+        <button class="sidebar-button" data-tab="news">News</button>
+        <button class="sidebar-button" data-tab="roster">Roster</button>
+        <button class="sidebar-button" data-tab="seasons">Seasons</button>
+      </div>
+    </nav>
+
+    <div class="main-content">
+      <header class="header-bar">
+        <div>
+          <div class="header-bar__league">Mathematical Basketball Association</div>
+          <div class="header-bar__season">{{ season.label }} · {{ season.year }}</div>
+        </div>
+        <div class="header-bar__season">DAY {{ season.current_day if not season.is_complete else season.current_day - 1 }}/{{ config.season_length }}
+          {% if season_history %}
+          <span style="margin-left: 1rem; font-size: 0.7rem; color: var(--text-muted);">(Career: {{ player.career_totals.seasons_played }} seasons)</span>
+          {% endif %}
+        </div>
+      </header>
+
+      <div id="dashboard-main">
+        {% include "partials/dashboard_main.html" %}
+      </div>
+      
+      <!-- Game Detail Modal -->
+      <div id="game-modal" class="modal">
+        <div class="modal-content">
+          <span class="modal-close" onclick="closeModal()">&times;</span>
+          <div id="game-modal-content"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

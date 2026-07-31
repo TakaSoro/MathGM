@@ -1,0 +1,86 @@
+{% if season_complete %}
+<div class="season-complete">
+  SEASON COMPLETE — {{ season.player_record.wins }}-{{ season.player_record.losses }}
+  <button class="btn-primary" type="button"
+          hx-post="/api/new-season"
+          hx-target="#dashboard-main"
+          hx-swap="innerHTML"
+          style="margin-left: 1rem;">
+    Start Next Season
+  </button>
+</div>
+{% endif %}
+
+<form
+  class="submit-form"
+  hx-post="/api/submit-day"
+  hx-target="body"
+  hx-swap="innerHTML"
+>
+  <!-- Study Hours -->
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label" for="math_hours">Math Hours</label>
+      <input class="form-input" type="number" id="math_hours" name="math_hours"
+             min="0" max="16" step="0.5" value="0" {% if season_complete %}disabled{% endif %}>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="physics_hours">Physics Hours</label>
+      <input class="form-input" type="number" id="physics_hours" name="physics_hours"
+             min="0" max="8" step="0.5" value="0" {% if season_complete %}disabled{% endif %}>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label" for="cs_hours">CS Hours</label>
+      <input class="form-input" type="number" id="cs_hours" name="cs_hours"
+             min="0" max="8" step="0.5" value="0" {% if season_complete %}disabled{% endif %}>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="reading_minutes">Reading (min)</label>
+      <input class="form-input" type="number" id="reading_minutes" name="reading_minutes"
+             min="0" max="480" value="0" {% if season_complete %}disabled{% endif %}>
+    </div>
+  </div>
+
+  <!-- Study Metrics -->
+  <div class="form-row">
+    <div class="form-group">
+      <label class="form-label" for="homeworks_done">Homeworks Completed</label>
+      <input class="form-input" type="number" id="homeworks_done" name="homeworks_done"
+             min="0" max="10" value="0" {% if season_complete %}disabled{% endif %}>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="misconceptions_fixed">Misconceptions Fixed</label>
+      <input class="form-input" type="number" id="misconceptions_fixed" name="misconceptions_fixed"
+             min="0" max="10" value="0" {% if season_complete %}disabled{% endif %}>
+    </div>
+  </div>
+
+  <div class="form-group form-group--full">
+    <label class="form-label" for="new_things_learned">New Things Learned</label>
+    <input class="form-input" type="number" id="new_things_learned" name="new_things_learned"
+           min="0" max="10" value="0" {% if season_complete %}disabled{% endif %}>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn-primary" type="submit" {% if season_complete %}disabled{% endif %}>
+      Submit Day
+    </button>
+    <button class="btn-secondary" type="button"
+            hx-post="/api/reset/season"
+            hx-target="body"
+            hx-swap="innerHTML"
+            hx-confirm="Reset entire season? All progress will be lost.">
+      Reset Season
+    </button>
+    <button class="btn-secondary" type="button"
+            hx-post="/api/reset/career"
+            hx-target="body"
+            hx-swap="innerHTML"
+            hx-confirm="Reset entire career? All progress will be lost.">
+      Reset Career
+    </button>
+  </div>
+</form>

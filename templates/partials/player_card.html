@@ -1,0 +1,41 @@
+<div class="player-card">
+  <div class="player-card__top">
+    <div>
+      <h1 class="player-card__name">{{ player.name }}</h1>
+      <p class="player-card__meta">{{ player.team }} · {{ player.division }}</p>
+      <span class="player-card__position">{{ player.position }}</span>
+    </div>
+    <div class="player-card__ovr">
+      <div class="player-card__ovr-label">OVR</div>
+      <div class="player-card__ovr-value">{{ overall }}</div>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    {% for key, label in stat_labels.items() %}
+    {% set value = player_stats[key] %}
+    <div class="stat-item">
+      <div class="stat-item__header">
+        <span class="stat-item__label">{{ label }}</span>
+        <span class="stat-item__value">{{ value }}</span>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-bar__fill" style="width: {{ value }}%"></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if player.streak.current > 0 %}
+  {% set tier_class = '' %}
+  {% if player.streak.current >= 90 %}{% set tier_class = 'streak-badge--legend' %}
+  {% elif player.streak.current >= 30 %}{% set tier_class = 'streak-badge--iron' %}
+  {% elif player.streak.current >= 14 %}{% set tier_class = 'streak-badge--elite' %}
+  {% elif player.streak.current >= 7 %}{% set tier_class = 'streak-badge--hot' %}
+  {% endif %}
+  <div class="streak-badge {{ tier_class }}">
+    STREAK: <span class="streak-badge__count">{{ player.streak.current }}</span>
+    {% if streak_tier %} · {{ streak_tier }}{% endif %}
+  </div>
+  {% endif %}
+</div>

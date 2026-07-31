@@ -1,0 +1,11 @@
+{
+  "year": 2027,
+  "label": "Sophomore Season",
+  "current_day": 1,
+  "games_played": 0,
+  "is_complete": false,
+  "player_record": {
+    "wins": 0,
+    "losses": 0
+  }
+}

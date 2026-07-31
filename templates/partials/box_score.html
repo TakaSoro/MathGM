@@ -1,0 +1,28 @@
+{% if last_game %}
+<div class="box-score">
+  <div class="box-score__header">
+    <span class="box-score__game">GAME {{ last_game.day }}</span>
+    <span class="box-score__result box-score__result--{{ 'win' if last_game.result == 'W' else 'loss' }}">
+      {{ last_game.result }}
+    </span>
+  </div>
+  <div class="box-score__line">
+    {{ last_game.box_score.PTS }} PTS ·
+    {{ last_game.box_score.AST }} AST ·
+    {{ last_game.box_score.REB }} REB ·
+    {{ last_game.box_score.STL }} STL ·
+    {{ last_game.box_score.BLK }} BLK ·
+    {{ last_game.box_score.TO }} TO
+  </div>
+  <div class="box-score__mvp">MVP SCORE: {{ last_game.mvp_score }}</div>
+  {% if last_game.bonuses %}
+  <div class="box-score__bonuses">
+    {% for bonus in last_game.bonuses %}
+    <span class="bonus-tag">{{ bonus_labels.get(bonus, bonus) }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% else %}
+<div class="box-score box-score--empty">No games played yet. Submit your first day below.</div>
+{% endif %}
