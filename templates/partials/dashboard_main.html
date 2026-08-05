@@ -83,12 +83,12 @@
               <div class="comparison-row__value">{% if rival_summary %}{{ rival_summary.wins }}-{{ rival_summary.losses }}{% else %}0-0{% endif %}</div>
             </div>
             <div class="comparison-row">
-              <div class="comparison-row__value {% if last_game and last_game.mvp_score > (rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else 0.0) %}comparison-row__value--better{% endif %}">{{ last_game.mvp_score if last_game else '0.0' }}</div>
+              <div class="comparison-row__value {% if last_game and last_game.mvp_score > (rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else 0.0) %}comparison-row__value--better{% endif %}">{{ (last_game.mvp_score if last_game else 0) | round(1) }}</div>
               <div class="comparison-row__label">Last MVP</div>
-              <div class="comparison-row__value {% if rival_player and rival_player.last_game_mvp is not none and rival_player.last_game_mvp > (last_game.mvp_score if last_game else 0.0) %}comparison-row__value--better{% endif %}">{{ rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else '0.0' }}</div>
+              <div class="comparison-row__value {% if rival_player and rival_player.last_game_mvp is not none and rival_player.last_game_mvp > (last_game.mvp_score if last_game else 0.0) %}comparison-row__value--better{% endif %}">{{ (rival_player.last_game_mvp if rival_player and rival_player.last_game_mvp is not none else 0) | round(1) }}</div>
             </div>
             {% set user_avg_mvp = mvp_race | selectattr("is_user") | map(attribute="avg_mvp") | first | default(0.0) %}
-            {% set rival_avg_mvp = rival_summary.avg_mvp if rival_summary is not none else 0.0 %}
+            {% set rival_avg_mvp = (rival_summary.avg_mvp if rival_summary is not none else 0) | round(1) %}
             <div class="comparison-row">
               <div class="comparison-row__value {% if user_avg_mvp > rival_avg_mvp %}comparison-row__value--better{% endif %}">{{ user_avg_mvp }}</div>
               <div class="comparison-row__label">Season Avg MVP</div>
@@ -145,7 +145,7 @@
                   <td>{{ loop.index }}</td>
                   <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
                   <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
-                  <td class="stat-col">{{ r.season_mvp }}</td>
+                  <td class="stat-col">{{ r.season_mvp | round(1) }}</td>
                   <td class="stat-col">{{ r.season_gp }}</td>
                 </tr>
                 {% endfor %}
@@ -169,7 +169,7 @@
                   <td>{{ loop.index }}</td>
                   <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
                   <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
-                  <td class="stat-col">{{ r.season_mvp }}</td>
+                  <td class="stat-col">{{ r.season_mvp | round(1) }}</td>
                   <td class="stat-col">{{ r.season_gp }}</td>
                 </tr>
                 {% endfor %}
@@ -341,7 +341,7 @@
                   <td>{{ loop.index }}</td>
                   <td>{{ r.name }}{% if r.is_rookie %}<span class="badge badge--accent" style="margin-left: 0.2rem;">R</span>{% endif %}</td>
                   <td class="text-muted" style="font-size: 0.7rem;">{{ r.team }}</td>
-                  <td class="stat-col">{{ r.career_mvp }}</td>
+                  <td class="stat-col">{{ r.career_mvp | round(1) }}</td>
                   <td class="stat-col">{{ r.career_gp }}</td>
                 </tr>
                 {% endfor %}
@@ -585,7 +585,7 @@
               <span>{{ game.box_score.BLK }} BLK</span>
               <span>{{ game.box_score.TO }} TO</span>
             </div>
-            <div class="game-card__mvp">MVP: {{ game.mvp_score }}</div>
+            <div class="game-card__mvp">MVP: {{ game.mvp_score | round(1) }}</div>
             {% if game.bonuses %}
             <div class="game-card__bonuses">
               {% for bonus in game.bonuses %}

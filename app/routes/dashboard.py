@@ -1,10 +1,16 @@
 from __future__ import annotations
 
 from pathlib import Path
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
 
 from fastapi import APIRouter, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
+
+import ollama
 
 from app.engine.game_engine import (
     get_streak_tier_name,
@@ -26,6 +32,11 @@ BONUS_LABELS = {
     "all_rounder": "All-Rounder",
 }
 
+"""MODEL = "intfloat/multilingual-e5-large-instruct"
+
+client = InferenceClient(
+    api_key=os.getenv("HUGGINGFACE")
+)"""
 
 def make_player_summary(name, team, is_rookie, is_rival, ovr, gp, pts, ast, reb, stl, blk, to, mvp_score, wins, losses, is_user=False):
     avg_pts = round(pts / gp, 1) if gp > 0 else 0.0
@@ -55,6 +66,61 @@ def make_player_summary(name, team, is_rookie, is_rival, ovr, gp, pts, ast, reb,
         "is_user": is_user,
     }
 
+def generate_prompt(game):
+    """
+    Convert a generated game story into an Ollama headline generation prompt.
+    """
+
+    box = game["box_score"]
+
+    result_text = "Victory" if game["result"] == "W" else "Loss"
+
+    perf = f"""
+You are a sports journalist for MathGM Daily.
+
+Your job is NOT to summarize the box score.
+Your job is to write a creative newspaper headline based on the performance.
+
+Find the most interesting story from the statistics.
+
+Rules:
+- The player's name is Melphin and his team is Seoul Science Dragons.
+- Do not repeat the statistics directly.
+- Do not output the box score.
+- Do not mention NBA, real teams, playoffs, championships, or awards.
+- Do not invent events.
+- Focus on what makes this performance notable.
+- Return ONLY one headline.
+
+Required format:
+YYYY-MM-DD : Headline | MathGM Daily   
+
+MathGM Basketball Game Report
+
+Game Day: {game["day"]}
+Date: {game["date_submitted"]}
+
+Box Score:
+Points: {box["PTS"]}
+Assists: {box["AST"]}
+Rebounds: {box["REB"]}
+Steals: {box["STL"]}
+Blocks: {box["BLK"]}
+Turnovers: {box["TO"]}
+
+MVP Score: {game["mvp_score"]}
+
+Game Result:
+{result_text}
+""".strip()
+
+    prompt = f"""
+{perf}
+
+Headline:
+"""
+
+    return prompt
 
 def generate_news(games, player, season, league_players) -> list[str]:
     if not games:
@@ -111,7 +177,31 @@ def generate_news(games, player, season, league_players) -> list[str]:
         news.append(f"Streak Alert: Melphin is on a {player.streak.current}-day study streak! Can anyone stop them?")
     elif rival and rival.streak >= 7:
         news.append(f"Streak Alert: Rival Hypatia is heating up with a {rival.streak}-day streak!")
-        
+
+    last_game_filtered = last_game.copy()
+    last_game_filtered.pop("input", None)
+    last_game_filtered.pop("ability_deltas", None)
+    last_game_filtered.pop("bonuses", None)
+
+    prompt = generate_prompt(last_game_filtered)
+
+    response = ollama.chat(
+        model="llama3.2:1b",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        options={
+            "temperature": 0.2
+        }
+    )
+
+    headline = response["message"]["content"]
+
+    news.append(headline)
+
     return news
 
 
@@ -338,7 +428,7 @@ def build_context() -> dict:
         {"name": player.name, "team": player.team, "is_rookie": True, "is_user": True, "career_stl": player.career_totals.total_stl, "career_gp": player.career_totals.games_played}
     ]
     for ai in league_players:
-        career_reb_list.append({
+        career_stl_list.append({
             "name": ai.name,
             "team": ai.team,
             "is_rookie": ai.is_rookie,
@@ -366,7 +456,7 @@ def build_context() -> dict:
         {"name": player.name, "team": player.team, "is_rookie": True, "is_user": True, "career_to": player.career_totals.total_to, "career_gp": player.career_totals.games_played}
     ]
     for ai in league_players:
-        career_reb_list.append({
+        career_to_list.append({
             "name": ai.name,
             "team": ai.team,
             "is_rookie": ai.is_rookie,
@@ -380,7 +470,7 @@ def build_context() -> dict:
         {"name": player.name, "team": player.team, "is_rookie": True, "is_user": True, "career_mvp": player.career_totals.total_mvp, "career_gp": player.career_totals.games_played}
     ]
     for ai in league_players:
-        career_reb_list.append({
+        career_mvp_list.append({
             "name": ai.name,
             "team": ai.team,
             "is_rookie": ai.is_rookie,

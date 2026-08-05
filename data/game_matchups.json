@@ -1,1 +1,1082 @@
-[]
+[
+  {
+    "day": 1,
+    "team1_name": "Erlangen Algebra",
+    "team2_name": "Seoul Science Dragons",
+    "team1_score": 41.0,
+    "team2_score": 34.0,
+    "winner": "Erlangen Algebra",
+    "team1_players": [
+      {
+        "name": "Emmy Noether",
+        "team": "Erlangen Algebra",
+        "ovr": 78,
+        "box_score": {
+          "PTS": 9,
+          "AST": 5,
+          "REB": 5,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 13.0
+      },
+      {
+        "name": "Sophia Martinez",
+        "team": "Erlangen Algebra",
+        "ovr": 67,
+        "box_score": {
+          "PTS": 9,
+          "AST": 0,
+          "REB": 2,
+          "STL": 0,
+          "BLK": 2,
+          "TO": 2
+        },
+        "mvp_score": 9.4
+      },
+      {
+        "name": "Charlotte Martin",
+        "team": "Erlangen Algebra",
+        "ovr": 64,
+        "box_score": {
+          "PTS": 1,
+          "AST": 1,
+          "REB": 0,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 0
+      },
+      {
+        "name": "Isabella Lee",
+        "team": "Erlangen Algebra",
+        "ovr": 66,
+        "box_score": {
+          "PTS": 12,
+          "AST": 2,
+          "REB": 5,
+          "STL": 2,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 14.9
+      },
+      {
+        "name": "James Anderson",
+        "team": "Erlangen Algebra",
+        "ovr": 67,
+        "box_score": {
+          "PTS": 10,
+          "AST": 0,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 1,
+          "TO": 2
+        },
+        "mvp_score": 10.7
+      },
+      {
+        "name": "Matthew Anderson",
+        "team": "Erlangen Algebra",
+        "ovr": 42,
+        "box_score": {
+          "PTS": 0,
+          "AST": 3,
+          "REB": 5,
+          "STL": 2,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 3.6
+      }
+    ],
+    "team2_players": [
+      {
+        "name": "Melphin",
+        "team": "Seoul Science Dragons",
+        "ovr": 50,
+        "box_score": {
+          "PTS": 11,
+          "AST": 8,
+          "REB": 2,
+          "STL": 8,
+          "BLK": 0,
+          "TO": 0
+        },
+        "mvp_score": 37.6
+      },
+      {
+        "name": "Andrew Brown",
+        "team": "Seoul Science Dragons",
+        "ovr": 38,
+        "box_score": {
+          "PTS": 5,
+          "AST": 0,
+          "REB": 5,
+          "STL": 1,
+          "BLK": 1,
+          "TO": 2
+        },
+        "mvp_score": 7.2
+      },
+      {
+        "name": "Daniel Thomas",
+        "team": "Seoul Science Dragons",
+        "ovr": 37,
+        "box_score": {
+          "PTS": 8,
+          "AST": 0,
+          "REB": 3,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 8.5
+      },
+      {
+        "name": "Sophia Johnson",
+        "team": "Seoul Science Dragons",
+        "ovr": 45,
+        "box_score": {
+          "PTS": 10,
+          "AST": 2,
+          "REB": 2,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 11.4
+      },
+      {
+        "name": "Brandon Thomas",
+        "team": "Seoul Science Dragons",
+        "ovr": 31,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 5,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 1
+        },
+        "mvp_score": 2.2
+      },
+      {
+        "name": "Sophia Taylor",
+        "team": "Seoul Science Dragons",
+        "ovr": 46,
+        "box_score": {
+          "PTS": 0,
+          "AST": 1,
+          "REB": 9,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 5.2
+      }
+    ]
+  },
+  {
+    "day": 1,
+    "team1_name": "Basel Analysis",
+    "team2_name": "Princeton Relativists",
+    "team1_score": 32.0,
+    "team2_score": 19.0,
+    "winner": "Basel Analysis",
+    "team1_players": [
+      {
+        "name": "Leonhard Euler Jr.",
+        "team": "Basel Analysis",
+        "ovr": 85,
+        "box_score": {
+          "PTS": 17,
+          "AST": 0,
+          "REB": 5,
+          "STL": 1,
+          "BLK": 2,
+          "TO": 1
+        },
+        "mvp_score": 28.9
+      },
+      {
+        "name": "James Taylor",
+        "team": "Basel Analysis",
+        "ovr": 41,
+        "box_score": {
+          "PTS": 6,
+          "AST": 2,
+          "REB": 3,
+          "STL": 2,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 8.9
+      },
+      {
+        "name": "Daniel Smith",
+        "team": "Basel Analysis",
+        "ovr": 25,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 0,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 0
+        },
+        "mvp_score": 0
+      },
+      {
+        "name": "Ryan Martin",
+        "team": "Basel Analysis",
+        "ovr": 26,
+        "box_score": {
+          "PTS": 0,
+          "AST": 2,
+          "REB": 1,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 0
+        },
+        "mvp_score": 2.9
+      },
+      {
+        "name": "Evelyn Brown",
+        "team": "Basel Analysis",
+        "ovr": 34,
+        "box_score": {
+          "PTS": 4,
+          "AST": 1,
+          "REB": 0,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 3.7
+      },
+      {
+        "name": "Evelyn Smith",
+        "team": "Basel Analysis",
+        "ovr": 48,
+        "box_score": {
+          "PTS": 5,
+          "AST": 1,
+          "REB": 1,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 3.2
+      }
+    ],
+    "team2_players": [
+      {
+        "name": "Albert Einstein",
+        "team": "Princeton Relativists",
+        "ovr": 85,
+        "box_score": {
+          "PTS": 5,
+          "AST": 4,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 1,
+          "TO": 2
+        },
+        "mvp_score": 8.5
+      },
+      {
+        "name": "Michael Williams",
+        "team": "Princeton Relativists",
+        "ovr": 26,
+        "box_score": {
+          "PTS": 0,
+          "AST": 2,
+          "REB": 2,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 0
+      },
+      {
+        "name": "Evelyn Taylor",
+        "team": "Princeton Relativists",
+        "ovr": 59,
+        "box_score": {
+          "PTS": 3,
+          "AST": 2,
+          "REB": 0,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 2.4
+      },
+      {
+        "name": "Olivia Johnson",
+        "team": "Princeton Relativists",
+        "ovr": 28,
+        "box_score": {
+          "PTS": 9,
+          "AST": 0,
+          "REB": 9,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 12.5
+      },
+      {
+        "name": "Brandon Moore",
+        "team": "Princeton Relativists",
+        "ovr": 43,
+        "box_score": {
+          "PTS": 1,
+          "AST": 0,
+          "REB": 6,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 2.0
+      },
+      {
+        "name": "Isabella Davis",
+        "team": "Princeton Relativists",
+        "ovr": 62,
+        "box_score": {
+          "PTS": 1,
+          "AST": 1,
+          "REB": 1,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 1.2
+      }
+    ]
+  },
+  {
+    "day": 1,
+    "team1_name": "Alexandria Alphas",
+    "team2_name": "Bletchley Decoders",
+    "team1_score": 50.0,
+    "team2_score": 26.0,
+    "winner": "Alexandria Alphas",
+    "team1_players": [
+      {
+        "name": "Hypatia 'Hyperbola' H.",
+        "team": "Alexandria Alphas",
+        "ovr": 75,
+        "box_score": {
+          "PTS": 12,
+          "AST": 9,
+          "REB": 6,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 2
+        },
+        "mvp_score": 20.0
+      },
+      {
+        "name": "Brandon Jackson",
+        "team": "Alexandria Alphas",
+        "ovr": 43,
+        "box_score": {
+          "PTS": 5,
+          "AST": 2,
+          "REB": 6,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 9.4
+      },
+      {
+        "name": "Amelia Johnson",
+        "team": "Alexandria Alphas",
+        "ovr": 59,
+        "box_score": {
+          "PTS": 6,
+          "AST": 3,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 1,
+          "TO": 1
+        },
+        "mvp_score": 9.8
+      },
+      {
+        "name": "Matthew Jones",
+        "team": "Alexandria Alphas",
+        "ovr": 60,
+        "box_score": {
+          "PTS": 11,
+          "AST": 0,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 12.0
+      },
+      {
+        "name": "Amelia Davis",
+        "team": "Alexandria Alphas",
+        "ovr": 42,
+        "box_score": {
+          "PTS": 8,
+          "AST": 0,
+          "REB": 6,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 10.0
+      },
+      {
+        "name": "Ryan Jackson",
+        "team": "Alexandria Alphas",
+        "ovr": 61,
+        "box_score": {
+          "PTS": 8,
+          "AST": 0,
+          "REB": 0,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 1
+        },
+        "mvp_score": 7.7
+      }
+    ],
+    "team2_players": [
+      {
+        "name": "Alan Turing",
+        "team": "Bletchley Decoders",
+        "ovr": 87,
+        "box_score": {
+          "PTS": 14,
+          "AST": 4,
+          "REB": 6,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 1
+        },
+        "mvp_score": 19.5
+      },
+      {
+        "name": "Sophia White",
+        "team": "Bletchley Decoders",
+        "ovr": 54,
+        "box_score": {
+          "PTS": 1,
+          "AST": 0,
+          "REB": 0,
+          "STL": 1,
+          "BLK": 2,
+          "TO": 0
+        },
+        "mvp_score": 3.4
+      },
+      {
+        "name": "Matthew Lee",
+        "team": "Bletchley Decoders",
+        "ovr": 28,
+        "box_score": {
+          "PTS": 3,
+          "AST": 0,
+          "REB": 5,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 4.5
+      },
+      {
+        "name": "Daniel Thompson",
+        "team": "Bletchley Decoders",
+        "ovr": 48,
+        "box_score": {
+          "PTS": 1,
+          "AST": 1,
+          "REB": 0,
+          "STL": 2,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 1.7
+      },
+      {
+        "name": "Brandon Anderson",
+        "team": "Bletchley Decoders",
+        "ovr": 56,
+        "box_score": {
+          "PTS": 3,
+          "AST": 0,
+          "REB": 1,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 1.5
+      },
+      {
+        "name": "Olivia Davis",
+        "team": "Bletchley Decoders",
+        "ovr": 43,
+        "box_score": {
+          "PTS": 4,
+          "AST": 0,
+          "REB": 0,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 1.0
+      }
+    ]
+  },
+  {
+    "day": 1,
+    "team1_name": "Göttingen Geometers",
+    "team2_name": "London Analytical",
+    "team1_score": 16.0,
+    "team2_score": 27.0,
+    "winner": "London Analytical",
+    "team1_players": [
+      {
+        "name": "Carl Gauss",
+        "team": "Göttingen Geometers",
+        "ovr": 86,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 1,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 0
+      },
+      {
+        "name": "Ryan Taylor",
+        "team": "Göttingen Geometers",
+        "ovr": 67,
+        "box_score": {
+          "PTS": 6,
+          "AST": 1,
+          "REB": 1,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 0
+        },
+        "mvp_score": 7.2
+      },
+      {
+        "name": "Andrew Moore",
+        "team": "Göttingen Geometers",
+        "ovr": 29,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 2,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 0
+        },
+        "mvp_score": 1.7
+      },
+      {
+        "name": "Charlotte Moore",
+        "team": "Göttingen Geometers",
+        "ovr": 50,
+        "box_score": {
+          "PTS": 5,
+          "AST": 0,
+          "REB": 0,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 3.0
+      },
+      {
+        "name": "Emma Lee",
+        "team": "Göttingen Geometers",
+        "ovr": 64,
+        "box_score": {
+          "PTS": 5,
+          "AST": 3,
+          "REB": 6,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 10.1
+      },
+      {
+        "name": "David Harris",
+        "team": "Göttingen Geometers",
+        "ovr": 40,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 1,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 0
+      }
+    ],
+    "team2_players": [
+      {
+        "name": "Ada Lovelace",
+        "team": "London Analytical",
+        "ovr": 73,
+        "box_score": {
+          "PTS": 8,
+          "AST": 4,
+          "REB": 1,
+          "STL": 2,
+          "BLK": 1,
+          "TO": 3
+        },
+        "mvp_score": 11.0
+      },
+      {
+        "name": "Brandon Jackson",
+        "team": "London Analytical",
+        "ovr": 63,
+        "box_score": {
+          "PTS": 3,
+          "AST": 1,
+          "REB": 0,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 2.7
+      },
+      {
+        "name": "Daniel White",
+        "team": "London Analytical",
+        "ovr": 60,
+        "box_score": {
+          "PTS": 0,
+          "AST": 4,
+          "REB": 4,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 2.8
+      },
+      {
+        "name": "Olivia Martinez",
+        "team": "London Analytical",
+        "ovr": 37,
+        "box_score": {
+          "PTS": 5,
+          "AST": 2,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 0
+        },
+        "mvp_score": 8.4
+      },
+      {
+        "name": "Charlotte Martin",
+        "team": "London Analytical",
+        "ovr": 50,
+        "box_score": {
+          "PTS": 11,
+          "AST": 0,
+          "REB": 0,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 9.0
+      },
+      {
+        "name": "Sophia Martin",
+        "team": "London Analytical",
+        "ovr": 44,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 1.0
+      }
+    ]
+  },
+  {
+    "day": 1,
+    "team1_name": "NASA Orbiters",
+    "team2_name": "Paris Theory",
+    "team1_score": 19.0,
+    "team2_score": 22.0,
+    "winner": "Paris Theory",
+    "team1_players": [
+      {
+        "name": "Katherine Johnson",
+        "team": "NASA Orbiters",
+        "ovr": 70,
+        "box_score": {
+          "PTS": 3,
+          "AST": 2,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 3.4
+      },
+      {
+        "name": "Evelyn Lee",
+        "team": "NASA Orbiters",
+        "ovr": 40,
+        "box_score": {
+          "PTS": 0,
+          "AST": 1,
+          "REB": 0,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 0
+        },
+        "mvp_score": 1.7
+      },
+      {
+        "name": "Daniel Taylor",
+        "team": "NASA Orbiters",
+        "ovr": 56,
+        "box_score": {
+          "PTS": 6,
+          "AST": 0,
+          "REB": 4,
+          "STL": 2,
+          "BLK": 1,
+          "TO": 3
+        },
+        "mvp_score": 7.7
+      },
+      {
+        "name": "David Smith",
+        "team": "NASA Orbiters",
+        "ovr": 40,
+        "box_score": {
+          "PTS": 0,
+          "AST": 1,
+          "REB": 2,
+          "STL": 2,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 2.7
+      },
+      {
+        "name": "James Taylor",
+        "team": "NASA Orbiters",
+        "ovr": 52,
+        "box_score": {
+          "PTS": 4,
+          "AST": 1,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 3.7
+      },
+      {
+        "name": "Olivia Davis",
+        "team": "NASA Orbiters",
+        "ovr": 63,
+        "box_score": {
+          "PTS": 6,
+          "AST": 0,
+          "REB": 1,
+          "STL": 1,
+          "BLK": 1,
+          "TO": 3
+        },
+        "mvp_score": 5.2
+      }
+    ],
+    "team2_players": [
+      {
+        "name": "Sophie Germain",
+        "team": "Paris Theory",
+        "ovr": 75,
+        "box_score": {
+          "PTS": 6,
+          "AST": 1,
+          "REB": 2,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 5.7
+      },
+      {
+        "name": "Daniel Williams",
+        "team": "Paris Theory",
+        "ovr": 50,
+        "box_score": {
+          "PTS": 3,
+          "AST": 1,
+          "REB": 0,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 1.7
+      },
+      {
+        "name": "James Johnson",
+        "team": "Paris Theory",
+        "ovr": 33,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 1,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 0
+      },
+      {
+        "name": "Daniel Davis",
+        "team": "Paris Theory",
+        "ovr": 60,
+        "box_score": {
+          "PTS": 7,
+          "AST": 0,
+          "REB": 4,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 2
+        },
+        "mvp_score": 7.7
+      },
+      {
+        "name": "Charlotte Harris",
+        "team": "Paris Theory",
+        "ovr": 30,
+        "box_score": {
+          "PTS": 0,
+          "AST": 2,
+          "REB": 2,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 0.4
+      },
+      {
+        "name": "Matthew Johnson",
+        "team": "Paris Theory",
+        "ovr": 64,
+        "box_score": {
+          "PTS": 6,
+          "AST": 1,
+          "REB": 7,
+          "STL": 2,
+          "BLK": 0,
+          "TO": 4
+        },
+        "mvp_score": 8.2
+      }
+    ]
+  },
+  {
+    "day": 1,
+    "team1_name": "Madras Mock Theta",
+    "team2_name": "Cambridge Calculators",
+    "team1_score": 31.0,
+    "team2_score": 40.0,
+    "winner": "Cambridge Calculators",
+    "team1_players": [
+      {
+        "name": "S. Ramanujan II",
+        "team": "Madras Mock Theta",
+        "ovr": 80,
+        "box_score": {
+          "PTS": 13,
+          "AST": 2,
+          "REB": 4,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 22.4
+      },
+      {
+        "name": "Amelia Harris",
+        "team": "Madras Mock Theta",
+        "ovr": 67,
+        "box_score": {
+          "PTS": 5,
+          "AST": 4,
+          "REB": 4,
+          "STL": 1,
+          "BLK": 2,
+          "TO": 3
+        },
+        "mvp_score": 9.2
+      },
+      {
+        "name": "Mia Martinez",
+        "team": "Madras Mock Theta",
+        "ovr": 29,
+        "box_score": {
+          "PTS": 2,
+          "AST": 1,
+          "REB": 1,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 1.2
+      },
+      {
+        "name": "Chris Smith",
+        "team": "Madras Mock Theta",
+        "ovr": 23,
+        "box_score": {
+          "PTS": 5,
+          "AST": 0,
+          "REB": 2,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 2
+        },
+        "mvp_score": 4.0
+      },
+      {
+        "name": "Andrew Martinez",
+        "team": "Madras Mock Theta",
+        "ovr": 40,
+        "box_score": {
+          "PTS": 0,
+          "AST": 2,
+          "REB": 1,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 2
+        },
+        "mvp_score": 0.6
+      },
+      {
+        "name": "Joshua Davis",
+        "team": "Madras Mock Theta",
+        "ovr": 57,
+        "box_score": {
+          "PTS": 6,
+          "AST": 3,
+          "REB": 2,
+          "STL": 3,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 9.1
+      }
+    ],
+    "team2_players": [
+      {
+        "name": "Isaac Newton",
+        "team": "Cambridge Calculators",
+        "ovr": 83,
+        "box_score": {
+          "PTS": 15,
+          "AST": 3,
+          "REB": 3,
+          "STL": 3,
+          "BLK": 2,
+          "TO": 1
+        },
+        "mvp_score": 30.0
+      },
+      {
+        "name": "Chris Martinez",
+        "team": "Cambridge Calculators",
+        "ovr": 47,
+        "box_score": {
+          "PTS": 4,
+          "AST": 4,
+          "REB": 3,
+          "STL": 0,
+          "BLK": 1,
+          "TO": 2
+        },
+        "mvp_score": 7.0
+      },
+      {
+        "name": "Mia Rodriguez",
+        "team": "Cambridge Calculators",
+        "ovr": 68,
+        "box_score": {
+          "PTS": 10,
+          "AST": 1,
+          "REB": 1,
+          "STL": 2,
+          "BLK": 1,
+          "TO": 1
+        },
+        "mvp_score": 12.9
+      },
+      {
+        "name": "David Martinez",
+        "team": "Cambridge Calculators",
+        "ovr": 43,
+        "box_score": {
+          "PTS": 6,
+          "AST": 3,
+          "REB": 2,
+          "STL": 0,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 6.1
+      },
+      {
+        "name": "Emma Johnson",
+        "team": "Cambridge Calculators",
+        "ovr": 37,
+        "box_score": {
+          "PTS": 5,
+          "AST": 0,
+          "REB": 1,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 1
+        },
+        "mvp_score": 5.5
+      },
+      {
+        "name": "Evelyn Anderson",
+        "team": "Cambridge Calculators",
+        "ovr": 35,
+        "box_score": {
+          "PTS": 0,
+          "AST": 0,
+          "REB": 0,
+          "STL": 1,
+          "BLK": 0,
+          "TO": 3
+        },
+        "mvp_score": 0
+      }
+    ]
+  }
+]

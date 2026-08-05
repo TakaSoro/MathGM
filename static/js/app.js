@@ -241,7 +241,7 @@ function renderGameDetail(data, container) {
           <div class="stat-row"><span class="stat-label">Blocks</span><span class="stat-value">${game.box_score.BLK}</span></div>
           <div class="stat-row"><span class="stat-label">Turnovers</span><span class="stat-value">${game.box_score.TO}</span></div>
         </div>
-        <div class="mvp-score">MVP Score: ${game.mvp_score}</div>
+        <div class="mvp-score">MVP Score: ${game.mvp_score.toFixed(1)}</div>
         ${game.bonuses ? `<div class="bonuses">${game.bonuses.map((b) => `<span class="bonus-tag">${b}</span>`).join("")}</div>` : ""}
       </div>
   `;

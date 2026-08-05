@@ -1,1 +1,35 @@
-[]
+[
+  {
+    "day": 1,
+    "date_submitted": "2026-08-05",
+    "input": {
+      "math_hours": 3.0,
+      "physics_hours": 0.0,
+      "cs_hours": 0.0,
+      "homeworks_done": 5,
+      "misconceptions_fixed": 0,
+      "new_things_learned": 10,
+      "reading_minutes": 0
+    },
+    "box_score": {
+      "PTS": 11,
+      "AST": 8,
+      "REB": 2,
+      "STL": 8,
+      "BLK": 0,
+      "TO": 0
+    },
+    "mvp_score": 37.6,
+    "bonuses": [
+      "homework_marathon"
+    ],
+    "ability_deltas": {
+      "proof": 1,
+      "consistency": 1,
+      "discipline": 2,
+      "communication": 1,
+      "creativity": 2
+    },
+    "result": "W"
+  }
+]
