@@ -16,3 +16,7 @@ python run.py
 
 Open http://127.0.0.1:8000
 
+## AI Acknowledgments
+This project was developed with assistance from:
+* Gemini
+* ChatGPT
